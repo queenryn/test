@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Undangan Pernikahan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+  --primary:#8b6f4e;
+  --secondary:#e8dfd2;
+  --dark:#3b2f23;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  font-family: 'Georgia', serif;
+  background:#f7f4ef;
+  color:#333;
+  overflow:hidden;
+}
+
+section {
+  padding:80px 20px;
+  text-align:center;
+}
+
+h1,h2,h3 { margin:10px 0; }
+
+.btn {
+  background:var(--primary);
+  color:#fff;
+  padding:14px 34px;
+  border-radius:40px;
+  border:none;
+  cursor:pointer;
+  font-size:15px;
+}
+
+.card {
+  background:#fff;
+  border-radius:22px;
+  padding:30px;
+  max-width:520px;
+  margin:20px auto;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.divider {
+  width:80px;
+  height:2px;
+  background:var(--primary);
+  margin:25px auto;
+}
+
+.bg-image {
+  background:
+    linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+    url('section-bg.jpg') center/cover no-repeat;
+  color:#fff;
+}
+
+img {
+  max-width:100%;
+  border-radius:18px;
+}
+
+/* ===== COVER ===== */
+#cover {
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(rgba(10, 10, 10, 0.55), rgba(0,0,0,.55)),
+    url(couple.jpeg) center/cover no-repeat;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+  z-index:999;
+  transition:all 1.3s ease;
+}
+
+#cover.open {
+  transform:translateY(-100%);
+  opacity:0;
+}
+
+#musicBtn {
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  width:50px;
+  height:50px;
+  background:var(--primary);
+  color:#fff;
+  border-radius:50%;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  font-size:20px;
+  cursor:pointer;
+  z-index:10;
+}
+
+/* ===== COUNTDOWN ===== */
+.countdown span {
+  display:inline-block;
+  margin:10px;
+  font-size:18px;
+  font-weight:bold;
+}
+
+/* ===== GALLERY ===== */
+.gallery {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+  max-width:600px;
+  margin:auto;
+}
+
+/* ===== TIMELINE ===== */
+.timeline {
+  max-width:600px;
+  margin:auto;
+  text-align:left;
+}
+.timeline div {
+  margin-bottom:20px;
+  padding-left:15px;
+  border-left:3px solid var(--primary);
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background:var(--dark);
+  color:#fff;
+  padding:60px 20px;
+}
+
+/* ===== UCAPAN ===== */
+.ucapan-item {
+  background:#f9f9f9;
+  padding:10px;
+  margin-bottom:10px;
+  border-radius:10px;
+  text-align:left;
+  border-left:3px solid var(--primary);
+}
+
+/* ===== RSVP FORM ===== */
+.rsvp-form {
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+.rsvp-row {
+  display:flex;
+  gap:15px;
+  justify-content:center;
+}
+
+.rsvp-row input, .rsvp-row select {
+  flex:1;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  font-size:16px;
+  font-family: 'Georgia', serif;
+}
+
+.rsvp-row textarea {
+  width:100%;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  font-size:16px;
+  font-family: 'Georgia', serif;
+  resize:vertical;
+}
+</style>
+</head>
+
+<body>
+
+<!-- AUDIO -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- COVER -->
+<div id="cover">
+  <h3>Kepada Yth.</h3>
+  <h1 id="guestName">Tamu Undangan</h1>
+  <p>Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir di pernikahan kami</p>
+  <br>
+  <button class="btn" onclick="openInvitation()">Buka Undangan</button>
+</div>
+
+<div id="musicBtn" onclick="toggleMusic()">♫</div>
+
+<!-- OPENING -->
+<section>
+  <h2>Undangan Pernikahan</h2>
+  <div class="divider"></div>
+   <p><em>Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu merasa tenteram kepadanya. Dia menjadikan di antaramu rasa cinta dan kasih sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir. <br>QS. Ar-Rum : 21
+</em></p>
+</section>
+
+<!-- PROFILE -->
+<section class="rgba-image">
+  <h3>Assalamualaikum Wr.Wb</h3>
+  <p>Dengan memohon Rahmat dan Ridho Allah SWT yang telah menciptakan makhluk-Nya secara berpasang-pasangan <br>Kami bermaksud menyelenggarakan pernikahan kami</p>
+  <div class="card">
+    <div style="text-align:center; margin-bottom:20px;">
+      <h2>Groom</h2>
+      <img src="groom.jpeg" alt="Groom" style="width:100px; height:100px; border-radius:50%; object-fit:cover; margin-bottom:10px;">
+      <h3>Naruto Uzumaki</h3>
+      <p>Putra dari Bapak Muhammad & Ibu Aisyah</p>
+    </div>
+    <div style="text-align:center;">
+      <h2>Bride</h2>
+      <img src="bride.jpeg" alt="Bride" style="width:100px; height:100px; border-radius:50%; object-fit:cover; margin-bottom:10px;">
+      <h3>Hinata Hyuga</h3>
+      <p>Putri dari Bapak Adam & Ibu Siti</p>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section>
+  <h2>Menuju Hari Bahagia</h2>
+  <div class="countdown">
+    <span id="days"></span>
+    <span id="hours"></span>
+    <span id="minutes"></span>
+    <span id="seconds"></span>
+  </div>
+</section>
+
+<!-- EVENT -->
+<section class="rgba-image">
+  <div class="card">
+    <h3>Akad Nikah</h3>
+    <p>Sabtu, 25 Oktober 2025</p>
+    <p>08.00 WIB</p>
+  </div>
+
+  <div class="card">
+    <h3>Resepsi</h3>
+    <p>Sabtu, 25 Oktober 2025</p>
+    <p>11.30 – 14.00 WIB</p>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section>
+  <h2>Lokasi Acara</h2>
+  <p><strong>Grand Mangku Putra</strong></p>
+  <p>Jl. Akses Tol Cilegon Timur, Kedaleman, Cibeber, Kota Cilegon</p>
+  <a class="btn" href="https://maps.app.goo.gl/pTS972kBFHbgkwM19" target="_blank">Google Maps</a>
+</section>
+
+<!-- STORY -->
+<section class="bg-image">
+  <h2>Cerita Kami</h2>
+  <div class="timeline">
+    <div><strong>Pertemuan</strong><br>Awal perkenalan kami</div>
+    <div><strong>Lamaran</strong><br>Komitmen menuju masa depan</div>
+    <div><strong>Pernikahan</strong><br>Awal ibadah terpanjang</div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section>
+  <h2>Galeri</h2>
+  <div class="gallery">
+    <img src="preewed1.jpeg">
+    <img src="preewed2.jpeg">
+    <img src="preewed3.jpeg">
+    <img src="preewed4.jpeg">
+  </div>
+</section>
+
+<!-- RSVP & UCAPAN -->
+<section class="rgba-image">
+  <h2>RSVP & Ucapan</h2>
+  <div class="card">
+    <div class="rsvp-form">
+      <div class="rsvp-row">
+        <input id="namaInput" placeholder="Nama">
+        <select id="kehadiranSelect">
+          <option>Hadir</option>
+          <option>Tidak Hadir</option>
+        </select>
+      </div>
+      <textarea id="ucapanTextarea" placeholder="Tulis ucapan"></textarea>
+      <button class="btn" onclick="kirimRsvp()">Kirim</button>
+    </div>
+    <div id="rsvpList" style="margin-top:20px;"></div>
+  </div>
+</section>
+
+<!-- GIFT -->
+<section class="bg-color">
+  <h2>Wedding Gift</h2>
+  <div class="card">
+    <p>BCA – 1234567890</p>
+    <p>a.n Naruto</p>
+    <button class="btn" onclick="copyRek()">Salin Rekening</button>
+  </div>
+  <div class="card">
+    <p>BRI – 1234567890</p>
+    <p>a.n Hinata</p>
+    <button class="btn" onclick="copyRek()">Salin Rekening</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Terima kasih atas doa dan restu</p>
+  <h3>Dwina & Hisyam</h3>
+</footer>
+
+<script>
+/* OPEN COVER */
+function openInvitation(){
+  document.getElementById("cover").classList.add("open");
+  document.body.style.overflow="auto";
+  document.getElementById("music").play();
+  document.getElementById("musicBtn").style.display="flex";
+}
+
+/* MUSIC */
+function toggleMusic(){
+  const m=document.getElementById("music");
+  m.paused?m.play():m.pause();
+}
+
+/* COPY */
+function copyRek(){
+  navigator.clipboard.writeText("1234567890");
+  alert("Nomor rekening disalin");
+}
+
+/* GUEST */
+const p=new URLSearchParams(location.search);
+const g=p.get("to");
+if(g) document.getElementById("guestName").innerText=g.replace(/\+/g," ");
+
+/* COUNTDOWN */
+const t=new Date("2025-10-25T08:00:00").getTime();
+setInterval(()=>{
+  const n=new Date().getTime(),d=t-n;
+  document.getElementById("days").innerText=Math.floor(d/86400000)+" Hari";
+  document.getElementById("hours").innerText=Math.floor(d/3600000)%24+" Jam";
+  document.getElementById("minutes").innerText=Math.floor(d/60000)%60+" Menit";
+  document.getElementById("seconds").innerText=Math.floor(d/1000)%60+" Detik";
+},1000);
+
+/* RSVP */
+function kirimRsvp(){
+  const nama = document.getElementById("namaInput").value.trim();
+  const kehadiran = document.getElementById("kehadiranSelect").value;
+  const ucapan = document.getElementById("ucapanTextarea").value.trim();
+  if(nama && ucapan){
+    const list = document.getElementById("rsvpList");
+    const item = document.createElement("div");
+    item.className = "ucapan-item";
+    item.innerHTML = `<strong>${nama}</strong> - ${kehadiran}<br>${ucapan}`;
+    list.insertBefore(item, list.firstChild);
+    document.getElementById("namaInput").value = "";
+    document.getElementById("ucapanTextarea").value = "";
+  } else {
+    alert("Harap isi nama dan ucapan.");
+  }
+}
+</script>
+
+</body>
+</html>
