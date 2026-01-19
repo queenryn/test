@@ -17,9 +17,10 @@
 body {
   margin:0;
   font-family: 'Georgia', serif;
-  background:#f7f4ef;
+  background: linear-gradient(135deg, #f7f4ef 0%, #e8dfd2 100%);
   color:#333;
-  overflow:hidden;
+  overflow-x:hidden;
+  scroll-behavior: smooth;
 }
 
 section {
@@ -139,6 +140,7 @@ footer {
   background:var(--dark);
   color:#fff;
   padding:60px 20px;
+  text-align: center;
 }
 
 /* ===== UCAPAN ===== */
@@ -182,6 +184,51 @@ footer {
   font-family: 'Georgia', serif;
   resize:vertical;
 }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+section:nth-child(1) { animation-delay: 0.2s; }
+section:nth-child(2) { animation-delay: 0.4s; }
+section:nth-child(3) { animation-delay: 0.6s; }
+section:nth-child(4) { animation-delay: 0.8s; }
+section:nth-child(5) { animation-delay: 1s; }
+section:nth-child(6) { animation-delay: 1.2s; }
+section:nth-child(7) { animation-delay: 1.4s; }
+section:nth-child(8) { animation-delay: 1.6s; }
+section:nth-child(9) { animation-delay: 1.8s; }
+section:nth-child(10) { animation-delay: 2s; }
+
+/* Hover effects */
+.card:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease;
+}
+
+.btn:hover {
+  background: #a0805a;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
 </style>
 </head>
 
@@ -194,9 +241,8 @@ footer {
 
 <!-- COVER -->
 <div id="cover">
-  <h3>Kepada Yth.</h3>
-  <h1 id="guestName">Tamu Undangan</h1>
-  <p>Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir di pernikahan kami</p>
+  <p>Kepada Yth.</p>
+  <h2 id="guestName">Warga Konoha</h2>
   <br>
   <button class="btn" onclick="openInvitation()">Buka Undangan</button>
 </div>
@@ -323,7 +369,7 @@ footer {
 <!-- FOOTER -->
 <footer>
   <p>Terima kasih atas doa dan restu</p>
-  <h3>Dwina & Hisyam</h3>
+  <h3>Naruto Uzumaki & Hinata Hyuga</h3>
 </footer>
 
 <script>
@@ -373,12 +419,32 @@ function kirimRsvp(){
     item.className = "ucapan-item";
     item.innerHTML = `<strong>${nama}</strong> - ${kehadiran}<br>${ucapan}`;
     list.insertBefore(item, list.firstChild);
+    // Save to localStorage
+    const rsvpData = JSON.parse(localStorage.getItem("rsvpList") || "[]");
+    rsvpData.unshift({nama, kehadiran, ucapan});
+    localStorage.setItem("rsvpList", JSON.stringify(rsvpData));
     document.getElementById("namaInput").value = "";
     document.getElementById("ucapanTextarea").value = "";
   } else {
     alert("Harap isi nama dan ucapan.");
   }
 }
+
+function loadRsvp(){
+  const list = document.getElementById("rsvpList");
+  const rsvpData = JSON.parse(localStorage.getItem("rsvpList") || "[]");
+  rsvpData.forEach(data => {
+    const item = document.createElement("div");
+    item.className = "ucapan-item";
+    item.innerHTML = `<strong>${data.nama}</strong> - ${data.kehadiran}<br>${data.ucapan}`;
+    list.appendChild(item);
+  });
+}
+
+// Load on page load
+window.onload = function(){
+  loadRsvp();
+};
 </script>
 
 </body>
